@@ -50,17 +50,16 @@ def get_products():
     Retorna la lista de productos con toda su información.
     Cada producto incluye un campo 'id' único para tracking.
     """
-    # Usar rutas directas que funcionan en Vercel
-    # Flask servirá automáticamente archivos desde /static/
-    from urllib.parse import quote
-    
+    # En Vercel, los archivos en public/ se sirven automáticamente
+    # public/static/image.jpg -> accesible como /static/image.jpg
+    # Usar rutas directas sin codificación, Flask manejará los espacios
     return [
         {
             "id": "smart-plug",
             "title": "Smart Plug Wi-Fi",
             "description": "Control your devices from your phone in seconds.",
             "category": "Smart Home / Gadgets",
-            "image_url": f"/static/{quote('smart plug wifi.jpg')}",
+            "image_url": "/static/smart plug wifi.jpg",
             "affiliate_url": "https://amzn.to/4qf0UIj"
         },
         {
@@ -68,7 +67,7 @@ def get_products():
             "title": "360° Rotating Organizer",
             "description": "Instantly organize your kitchen, bathroom or desk.",
             "category": "Home Organization",
-            "image_url": f"/static/{quote('girador 360.jpg')}",
+            "image_url": "/static/girador 360.jpg",
             "affiliate_url": "https://amzn.to/4p3AfgR"
         },
         {
@@ -92,21 +91,35 @@ def home():
 
 # Asegurar que Flask sirva archivos estáticos correctamente
 # En Vercel, los archivos en public/ se sirven automáticamente
-# Esta ruta es para desarrollo local
+# Esta ruta es para desarrollo local y como fallback
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     """Sirve archivos estáticos desde la carpeta static o public/static"""
     from flask import send_from_directory
     import os
+    from urllib.parse import unquote
     
-    # Intentar desde public/static primero (para Vercel)
+    # Decodificar el nombre del archivo si viene codificado (para espacios y caracteres especiales)
+    filename_decoded = unquote(filename)
+    
+    # Intentar desde public/static primero (para Vercel y producción)
     public_static = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public', 'static')
     if os.path.exists(public_static):
-        return send_from_directory(public_static, filename)
+        # Buscar el archivo con el nombre decodificado
+        file_path = os.path.join(public_static, filename_decoded)
+        if os.path.exists(file_path):
+            return send_from_directory(public_static, filename_decoded)
     
-    # Fallback a static/ (para desarrollo local)
+    # Fallback a static/ (para desarrollo local si existe)
     static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-    return send_from_directory(static_folder, filename)
+    if os.path.exists(static_folder):
+        file_path = os.path.join(static_folder, filename_decoded)
+        if os.path.exists(file_path):
+            return send_from_directory(static_folder, filename_decoded)
+    
+    # Si no se encuentra, retornar 404
+    from flask import abort
+    abort(404)
 
 @app.route("/click/<product_id>")
 def track_click(product_id):
