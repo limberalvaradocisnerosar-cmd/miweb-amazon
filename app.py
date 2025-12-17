@@ -91,11 +91,20 @@ def home():
     return render_template("index.html", products=products)
 
 # Asegurar que Flask sirva archivos estáticos correctamente
+# En Vercel, los archivos en public/ se sirven automáticamente
+# Esta ruta es para desarrollo local
 @app.route('/static/<path:filename>')
 def serve_static(filename):
-    """Sirve archivos estáticos desde la carpeta static"""
+    """Sirve archivos estáticos desde la carpeta static o public/static"""
     from flask import send_from_directory
     import os
+    
+    # Intentar desde public/static primero (para Vercel)
+    public_static = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public', 'static')
+    if os.path.exists(public_static):
+        return send_from_directory(public_static, filename)
+    
+    # Fallback a static/ (para desarrollo local)
     static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
     return send_from_directory(static_folder, filename)
 
