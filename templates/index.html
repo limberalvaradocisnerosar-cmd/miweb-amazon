@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Finds That Make Life Easier</title>
+    <!-- Google Fonts: Inter (similar a SF Pro, tipografía moderna) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Hero Section: Diseño centrado, limpio, impactante -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Amazon Finds That Make Life Easier</h1>
+            <p class="hero-subtitle">Smart, simple and useful products — perfect gifts that arrive fast</p>
+        </div>
+    </section>
+
+    <!-- Products Section: Cards grandes, táctiles, mobile-first -->
+    <main class="products-section">
+        {% for product in products %}
+        <article class="product-card">
+            <!-- Imagen grande que ocupa casi todo el ancho en mobile -->
+            <div class="product-image-wrapper">
+                <img src="{{ product.image_url }}" alt="{{ product.title }}" class="product-image" loading="lazy">
+            </div>
+            
+            <!-- Contenido del producto -->
+            <div class="product-content">
+                <!-- Categoría pequeña, uppercase, estilo Apple -->
+                <div class="product-category">{{ product.category }}</div>
+                
+                <!-- Título grande y claro -->
+                <h2 class="product-title">{{ product.title }}</h2>
+                
+                <!-- Descripción corta y clara -->
+                <p class="product-description">{{ product.description }}</p>
+                
+                <!-- Botón CTA grande, redondeado, muy visible -->
+                <a href="{{ product.affiliate_url }}" target="_blank" rel="noopener noreferrer" class="cta-button">
+                    View on Amazon
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </main>
+
+    <!-- Footer: Disclaimer discreto -->
+    <footer class="footer">
+        <p class="footer-disclaimer">As an Amazon Associate I earn from qualifying purchases.</p>
+    </footer>
+</body>
+</html>
+
