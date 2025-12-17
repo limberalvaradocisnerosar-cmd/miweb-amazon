@@ -4,10 +4,10 @@ from flask import Flask, render_template, url_for, redirect, request
 
 # Configurar Flask para que funcione correctamente en Vercel
 # Asegurar que los templates y static folders estén correctamente configurados
-# Todo se sirve desde public/ directamente
+# Archivos estáticos en static/ (imágenes en static/images/)
 app = Flask(__name__, 
             template_folder='templates',
-            static_folder='public')
+            static_folder='static')
 
 # Clave única para acceso al panel de administración
 # IMPORTANTE: Cambiar por una clave segura antes de desplegar
@@ -54,16 +54,15 @@ def get_products():
     """
     Retorna la lista de productos con toda su información.
     Cada producto incluye un campo 'id' único para tracking.
+    Usa image_filename para que el template construya la URL con url_for.
     """
-    # En Vercel, los archivos en public/ se sirven automáticamente
-    # public/image.jpg -> accesible como /image.jpg
     return [
         {
             "id": "smart-plug",
             "title": "Smart Plug Wi-Fi",
             "description": "Control your devices from your phone in seconds.",
             "category": "Smart Home / Gadgets",
-            "image_url": "/smart-plug-wifi.jpg",
+            "image_filename": "smart-plug-wifi.jpg",
             "affiliate_url": "https://amzn.to/4qf0UIj"
         },
         {
@@ -71,7 +70,7 @@ def get_products():
             "title": "360° Rotating Organizer",
             "description": "Instantly organize your kitchen, bathroom or desk.",
             "category": "Home Organization",
-            "image_url": "/girador-360.jpg",
+            "image_filename": "girador-360.jpg",
             "affiliate_url": "https://amzn.to/4p3AfgR"
         },
         {
@@ -79,7 +78,7 @@ def get_products():
             "title": "Car Seat Gap Organizer",
             "description": "Stop losing items between your car seats.",
             "category": "Car Accessories",
-            "image_url": "/organizador.jpg",
+            "image_filename": "organizador.jpg",
             "affiliate_url": "https://amzn.to/3N7rgO8"
         }
     ]
@@ -93,9 +92,8 @@ def home():
     products = get_products()
     return render_template("index.html", products=products)
 
-# NOTA: En Vercel, los archivos en public/ se sirven automáticamente
-# No necesitamos una ruta especial en Flask porque Vercel los sirve directamente
-# Todos los archivos estáticos están en public/
+# NOTA: Flask sirve archivos estáticos desde static/ usando url_for('static', filename='...')
+# En Vercel, los archivos en static/ se sirven correctamente a través de Flask
 
 @app.route("/click/<product_id>")
 def track_click(product_id):
