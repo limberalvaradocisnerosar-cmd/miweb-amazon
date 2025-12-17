@@ -50,13 +50,17 @@ def get_products():
     Retorna la lista de productos con toda su información.
     Cada producto incluye un campo 'id' único para tracking.
     """
+    # Usar rutas directas que funcionan en Vercel
+    # Flask servirá automáticamente archivos desde /static/
+    from urllib.parse import quote
+    
     return [
         {
             "id": "smart-plug",
             "title": "Smart Plug Wi-Fi",
             "description": "Control your devices from your phone in seconds.",
             "category": "Smart Home / Gadgets",
-            "image_url": url_for('static', filename='smart plug wifi.jpg'),
+            "image_url": f"/static/{quote('smart plug wifi.jpg')}",
             "affiliate_url": "https://amzn.to/4qf0UIj"
         },
         {
@@ -64,7 +68,7 @@ def get_products():
             "title": "360° Rotating Organizer",
             "description": "Instantly organize your kitchen, bathroom or desk.",
             "category": "Home Organization",
-            "image_url": url_for('static', filename='girador 360.jpg'),
+            "image_url": f"/static/{quote('girador 360.jpg')}",
             "affiliate_url": "https://amzn.to/4p3AfgR"
         },
         {
@@ -72,7 +76,7 @@ def get_products():
             "title": "Car Seat Gap Organizer",
             "description": "Stop losing items between your car seats.",
             "category": "Car Accessories",
-            "image_url": url_for('static', filename='organizador.jpg'),
+            "image_url": "/static/organizador.jpg",
             "affiliate_url": "https://amzn.to/3N7rgO8"
         }
     ]
@@ -85,6 +89,15 @@ def home():
     """
     products = get_products()
     return render_template("index.html", products=products)
+
+# Asegurar que Flask sirva archivos estáticos correctamente
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    """Sirve archivos estáticos desde la carpeta static"""
+    from flask import send_from_directory
+    import os
+    static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    return send_from_directory(static_folder, filename)
 
 @app.route("/click/<product_id>")
 def track_click(product_id):
