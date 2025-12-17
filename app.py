@@ -59,7 +59,7 @@ def get_products():
             "title": "Smart Plug Wi-Fi",
             "description": "Control your devices from your phone in seconds.",
             "category": "Smart Home / Gadgets",
-            "image_url": "/static/smart plug wifi.jpg",
+            "image_url": "/static/smart-plug-wifi.jpg",
             "affiliate_url": "https://amzn.to/4qf0UIj"
         },
         {
@@ -67,7 +67,7 @@ def get_products():
             "title": "360° Rotating Organizer",
             "description": "Instantly organize your kitchen, bathroom or desk.",
             "category": "Home Organization",
-            "image_url": "/static/girador 360.jpg",
+            "image_url": "/static/girador-360.jpg",
             "affiliate_url": "https://amzn.to/4p3AfgR"
         },
         {
@@ -99,25 +99,27 @@ def serve_static(filename):
     import os
     from urllib.parse import unquote
     
-    # Decodificar el nombre del archivo si viene codificado (para espacios y caracteres especiales)
+    # Decodificar el nombre del archivo si viene codificado
     filename_decoded = unquote(filename)
     
+    # Obtener el directorio base (funciona tanto en local como en Vercel)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    
     # Intentar desde public/static primero (para Vercel y producción)
-    public_static = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'public', 'static')
+    public_static = os.path.join(base_dir, 'public', 'static')
     if os.path.exists(public_static):
-        # Buscar el archivo con el nombre decodificado
         file_path = os.path.join(public_static, filename_decoded)
         if os.path.exists(file_path):
             return send_from_directory(public_static, filename_decoded)
     
     # Fallback a static/ (para desarrollo local si existe)
-    static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    static_folder = os.path.join(base_dir, 'static')
     if os.path.exists(static_folder):
         file_path = os.path.join(static_folder, filename_decoded)
         if os.path.exists(file_path):
             return send_from_directory(static_folder, filename_decoded)
     
-    # Si no se encuentra, retornar 404
+    # Si no se encuentra, retornar 404 con mensaje de debug
     from flask import abort
     abort(404)
 
