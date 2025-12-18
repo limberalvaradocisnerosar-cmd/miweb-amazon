@@ -35,22 +35,16 @@
       class="fixed inset-0 z-40 flex items-center justify-center bg-white/95 backdrop-blur-sm opacity-0 scale-95 pointer-events-none transition-all duration-700"
     >
       <div class="max-w-xl mx-auto text-center px-6">
-        <p class="text-sm tracking-[0.25em] uppercase text-gray-400 mb-4 flex items-center justify-center gap-2">
-          <span class="text-base">🎄</span>
-          HOLIDAY FINDS
-        </p>
-        <h1 class="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4">
-          The kind of upgrades
-          <span class="font-bold">you didn’t know you needed</span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-900 mb-4 leading-tight">
+          Small daily annoyances
+          <span class="font-bold block mt-1">you can fix in minutes</span>
         </h1>
-        <p class="text-sm sm:text-base text-gray-500 mb-8">
-          Simple Amazon finds that quietly remove daily annoyances — cluttered cars, messy cables, wasted time.
+        <p class="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto">
+          Not flashy gadgets. Just simple products that eliminate real friction from your day — things you end up using every single day.
         </p>
-        <div class="inline-flex items-center gap-3 bg-black text-white px-6 py-3 rounded-full shadow-lg shadow-black/20">
-          <span class="text-sm font-medium">See what people keep rebuying</span>
-          <span class="text-xs uppercase tracking-[0.2em] text-gray-300">
-            View the picks
-          </span>
+        <div class="inline-flex items-center gap-2 bg-black text-white px-6 py-3.5 rounded-full shadow-lg shadow-black/20 hover:shadow-black/30 transition-shadow cursor-pointer">
+          <span class="text-sm sm:text-base font-medium">See how they work</span>
+          <span class="text-lg">→</span>
         </div>
       </div>
     </section>
@@ -58,46 +52,37 @@
     <!-- HERO EN FRANJA / MARQUEE (queda activo después de la animación inicial) -->
     <section
       id="hero-strip"
-      class="hidden mb-8 rounded-2xl border border-gray-100 bg-white/80 shadow-sm shadow-gray-200/60 overflow-hidden"
+      class="hidden mb-6 sm:mb-8 rounded-xl sm:rounded-2xl border border-gray-100 bg-white/80 shadow-sm shadow-gray-200/60 overflow-hidden"
     >
       <div class="hero-marquee-shell">
-        <div class="hero-marquee px-5 py-3 text-xs sm:text-[0.8rem] text-gray-500">
-          <span>Less clutter, more calm ·</span>
-          <span> Faster everyday routines ·</span>
-          <span> Gifts that actually get used ·</span>
-          <span> No learning curve ·</span>
-          <span> Subtle tech, real comfort ·</span>
-          <span> Amazon‑trusted picks ·</span>
-          <span> Small fixes for daily annoyances ·</span>
-          <span> Easy setup · No stress ·</span>
+        <div class="hero-marquee px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm text-gray-500">
+          <span>Stop losing things between car seats ·</span>
+          <span> Control lights without getting up ·</span>
+          <span> Keep counters organized effortlessly ·</span>
+          <span> Simple solutions for everyday problems ·</span>
+          <span> Things you'll actually use daily ·</span>
+          <span> No complicated setup ·</span>
+          <span> Stop losing things between car seats ·</span>
+          <span> Control lights without getting up ·</span>
+          <span> Keep counters organized effortlessly ·</span>
+          <span> Simple solutions for everyday problems ·</span>
+          <span> Things you'll actually use daily ·</span>
+          <span> No complicated setup ·</span>
         </div>
       </div>
     </section>
 
     <!-- Sección productos (rellenada por products.js desde Supabase) -->
     <section id="products-section">
-      <div class="products-header">
-        <h2 class="products-title">Products people didn’t expect to love — until they used them</h2>
-        <p class="products-subtitle">
-          Not flashy gadgets. Just small upgrades that make everyday life feel smoother.
-        </p>
-      </div>
       <main id="products" class="products-grid"></main>
     </section>
 
-    <p class="text-[0.8rem] text-gray-400 mt-4 max-w-2xl leading-relaxed">
-      No pressure to buy — browse at your own pace. You stay in control and complete every purchase directly on Amazon,
-      where you can double‑check ratings, shipping options, and return policies before deciding.
-    </p>
-
     <footer class="site-footer">
-      <span>
+      <p class="footer-text">
         This site uses Amazon affiliate links. We may earn a commission from qualifying purchases at no extra cost to you.
-      </span>
-      <span>
-        All information is for general convenience only. Always confirm price, availability, and details directly on Amazon before buying.
-      </span>
+      </p>
     </footer>
   </div>
 </body>
 </html>
+
