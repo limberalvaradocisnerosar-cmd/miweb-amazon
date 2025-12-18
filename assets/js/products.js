@@ -17,6 +17,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     .select("*")
     .order("created_at", { ascending: false });
 
+  // Ordenar para que Smart Plug aparezca primero (más universal)
+  if (data && data.length > 0) {
+    data.sort((a, b) => {
+      const aName = (a.name || "").toLowerCase();
+      const bName = (b.name || "").toLowerCase();
+      
+      // Smart Plug primero
+      if (aName.includes("plug") || aName.includes("wifi")) return -1;
+      if (bName.includes("plug") || bName.includes("wifi")) return 1;
+      
+      return 0;
+    });
+  }
+
   if (error) {
     console.error(error);
     container.innerHTML =
@@ -89,7 +103,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             data-url="${productUrl}"
             class="product-cta track-click"
           >
-            <span>See how it works on Amazon →</span>
+            <span>Get it now on Amazon →</span>
           </button>
         </article>
       `;

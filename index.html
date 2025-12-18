@@ -16,9 +16,10 @@
 
   <!-- JS (siempre con defer) -->
   <script defer src="/assets/js/supabase.js"></script>
-  <script defer src="/assets/js/hero.js"></script>
+  <script defer src="/assets/js/products-intro.js"></script>
   <script defer src="/assets/js/products.js"></script>
   <script defer src="/assets/js/tracking.js"></script>
+  <script defer src="/assets/js/cards-magnetic.js"></script>
 
   <link rel="icon" href="/assets/favicon.ico" />
 </head>
@@ -29,63 +30,45 @@
       <!-- Header minimal, sin texto comercial -->
     </header>
 
-    <!-- HERO FULLSCREEN (aparece al entrar y luego se desvanece) -->
+    <!-- HERO EN FRANJA / MARQUEE (línea infinita) -->
     <section
-      id="hero-overlay"
-      class="fixed inset-0 z-40 flex items-center justify-center bg-white/95 backdrop-blur-sm opacity-0 scale-95 pointer-events-none transition-all duration-700"
+      id="hero-strip"
+      class="mb-4 sm:mb-6 rounded-xl sm:rounded-2xl border border-gray-100 bg-white/80 shadow-sm shadow-gray-200/60 overflow-hidden"
     >
-      <div class="max-w-xl mx-auto text-center px-6">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-900 mb-4 leading-tight">
-          Simple solutions for everyday frustrations
-        </h1>
-        <p class="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto">
-          Not flashy gadgets.<br>
-          Just products that eliminate real annoyances at home and in your car,<br>
-          and that you end up using more than you expected.
-        </p>
-        <div class="inline-flex items-center gap-2 bg-black text-white px-6 py-3.5 rounded-full shadow-lg shadow-black/20 hover:shadow-black/30 transition-shadow cursor-pointer">
-          <span class="text-sm sm:text-base font-medium">See how they work</span>
-          <span class="text-lg">→</span>
+      <div class="hero-marquee-shell">
+        <div class="hero-marquee px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm text-gray-500">
+          <span>🎄 Holiday picks ·</span>
+          <span> Practical gifts that actually get used ·</span>
+          <span> Less clutter ·</span>
+          <span> Faster routines ·</span>
+          <span> Tech that helps, not complicates ·</span>
+          <span> No setup headaches ·</span>
+          <span> Everyday comfort ·</span>
+          <span> Simple solutions that stick ·</span>
+          <span> 🎄 Holiday picks ·</span>
+          <span> Practical gifts that actually get used ·</span>
+          <span> Less clutter ·</span>
+          <span> Faster routines ·</span>
+          <span> Tech that helps, not complicates ·</span>
+          <span> No setup headaches ·</span>
+          <span> Everyday comfort ·</span>
+          <span> Simple solutions that stick ·</span>
         </div>
       </div>
     </section>
 
-    <!-- HERO EN FRANJA / MARQUEE (queda activo después de la animación inicial) -->
-    <section
-      id="hero-strip"
-      class="hidden mb-6 sm:mb-8 rounded-xl sm:rounded-2xl border border-gray-100 bg-white/80 shadow-sm shadow-gray-200/60 overflow-hidden"
-    >
-      <div class="hero-marquee-shell">
-        <div class="hero-marquee px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm text-gray-500">
-          <span>Less clutter ·</span>
-          <span> Faster routines ·</span>
-          <span> Gifts that actually get used ·</span>
-          <span> Tech that helps, not complicates ·</span>
-          <span> No setup headaches ·</span>
-          <span> Everyday comfort ·</span>
-          <span> Simple solutions that stick ·</span>
-          <span> Less clutter ·</span>
-          <span> Faster routines ·</span>
-          <span> Gifts that actually get used ·</span>
-          <span> Tech that helps, not complicates ·</span>
-          <span> No setup headaches ·</span>
-          <span> Everyday comfort ·</span>
-          <span> Simple solutions that stick ·</span>
-        </div>
+    <!-- PRODUCTS INTRO: Aparece primero, luego se convierte en marquee infinito -->
+    <section id="products-intro-section" class="products-intro-section">
+      <div id="products-intro-typing" class="products-intro-typing">
+        <!-- Se llena dinámicamente con efecto de escritura -->
+      </div>
+      <div id="products-intro-marquee" class="products-intro-marquee hidden">
+        <!-- Marquee infinito con sombras -->
       </div>
     </section>
 
     <!-- Sección productos (rellenada por products.js desde Supabase) -->
     <section id="products-section">
-      <!-- Bloque introductorio antes de los productos -->
-      <div class="products-intro-block">
-        <p class="products-intro-text">
-          These products aren't popular by accident.<br>
-          We chose them because they solve real problems,<br>
-          have good ratings on Amazon,<br>
-          and get used more than you'd imagine.
-        </p>
-      </div>
 
       <main id="products" class="products-grid">
         <!-- Fallback: productos de ejemplo con descripciones (se reemplazan por JS si Supabase funciona) -->
@@ -103,7 +86,7 @@
             type="button"
             class="product-cta track-click"
           >
-            <span>See how it works on Amazon →</span>
+            <span>Get it now on Amazon →</span>
           </button>
         </article>
 
@@ -121,7 +104,7 @@
             type="button"
             class="product-cta track-click"
           >
-            <span>See how it works on Amazon →</span>
+            <span>Get it now on Amazon →</span>
           </button>
         </article>
 
@@ -139,7 +122,7 @@
             type="button"
             class="product-cta track-click"
           >
-            <span>See how it works on Amazon →</span>
+            <span>Get it now on Amazon →</span>
           </button>
         </article>
       </main>
