@@ -31,15 +31,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Mapeo de descripciones conversacionales (3 líneas: dolor → solución → curiosidad)
+  // Estas descripciones siempre se usan, sin importar qué venga de Supabase
   const productDescriptions = {
     "smart plug": "Siempre dejás cosas enchufadas sin darte cuenta.<br>Este enchufe te deja controlarlo todo desde el celular.<br>Una vez que lo usás, no volvés atrás.",
     "smart plug wi-fi": "Siempre dejás cosas enchufadas sin darte cuenta.<br>Este enchufe te deja controlarlo todo desde el celular.<br>Una vez que lo usás, no volvés atrás.",
+    "wifi": "Siempre dejás cosas enchufadas sin darte cuenta.<br>Este enchufe te deja controlarlo todo desde el celular.<br>Una vez que lo usás, no volvés atrás.",
+    "plug": "Siempre dejás cosas enchufadas sin darte cuenta.<br>Este enchufe te deja controlarlo todo desde el celular.<br>Una vez que lo usás, no volvés atrás.",
     "organizador": "Cajones desordenados que te hacen perder tiempo todos los días.<br>Este organizador hace visible todo de un solo vistazo.<br>Mirá por qué la gente lo usa más de lo que esperaba.",
+    "rotating": "Cajones desordenados que te hacen perder tiempo todos los días.<br>Este organizador hace visible todo de un solo vistazo.<br>Mirá por qué la gente lo usa más de lo que esperaba.",
     "rotating organizer": "Cajones desordenados que te hacen perder tiempo todos los días.<br>Este organizador hace visible todo de un solo vistazo.<br>Mirá por qué la gente lo usa más de lo que esperaba.",
-    "360° rotating organizer": "Cajones desordenados que te hacen perder tiempo todos los días.<br>Este organizador hace visible todo de un solo vistazo.<br>Mirá por qué la gente lo usa más de lo que esperaba.",
+    "360": "Cajones desordenados que te hacen perder tiempo todos los días.<br>Este organizador hace visible todo de un solo vistazo.<br>Mirá por qué la gente lo usa más de lo que esperaba.",
+    "girador": "Cajones desordenados que te hacen perder tiempo todos los días.<br>Este organizador hace visible todo de un solo vistazo.<br>Mirá por qué la gente lo usa más de lo que esperaba.",
     "car": "Objetos que se pierden entre los asientos constantemente.<br>Una solución simple que evita distracciones al manejar.<br>En Amazon se ve claro cómo funciona.",
     "car organizer": "Objetos que se pierden entre los asientos constantemente.<br>Una solución simple que evita distracciones al manejar.<br>En Amazon se ve claro cómo funciona.",
-    "car seat gap organizer": "Objetos que se pierden entre los asientos constantemente.<br>Una solución simple que evita distracciones al manejar.<br>En Amazon se ve claro cómo funciona."
+    "car seat": "Objetos que se pierden entre los asientos constantemente.<br>Una solución simple que evita distracciones al manejar.<br>En Amazon se ve claro cómo funciona.",
+    "gap": "Objetos que se pierden entre los asientos constantemente.<br>Una solución simple que evita distracciones al manejar.<br>En Amazon se ve claro cómo funciona.",
+    "auto": "Objetos que se pierden entre los asientos constantemente.<br>Una solución simple que evita distracciones al manejar.<br>En Amazon se ve claro cómo funciona."
   };
 
   const cardsHtml = data
@@ -47,22 +54,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       const productName = (product.name || "").trim();
       const productUrl = product.affiliate_url || "#";
       
-      // Buscar descripción (case insensitive, busca por palabras clave)
+      // Buscar descripción conversacional (case insensitive, busca por palabras clave)
       const nameLower = productName.toLowerCase();
       let description = null;
       
-      // Buscar coincidencia exacta o por palabras clave
-      for (const key in productDescriptions) {
+      // Buscar coincidencia por palabras clave (priorizar matches más largos primero)
+      const sortedKeys = Object.keys(productDescriptions).sort((a, b) => b.length - a.length);
+      for (const key of sortedKeys) {
         if (nameLower.includes(key)) {
           description = productDescriptions[key];
           break;
         }
       }
       
-      // Si no hay coincidencia, usar descripción del producto o genérica
+      // SIEMPRE usar descripción conversacional, nunca la de Supabase
+      // Si no hay coincidencia, usar genérica conversacional
       if (!description) {
-        description = product.description || 
-                     "Siempre te pasa algo que molesta todos los días.<br>Esta solución simple lo arregla sin complicaciones.<br>En Amazon se ve cómo funciona.";
+        description = "Siempre te pasa algo que molesta todos los días.<br>Esta solución simple lo arregla sin complicaciones.<br>En Amazon se ve cómo funciona.";
       }
 
       return `
