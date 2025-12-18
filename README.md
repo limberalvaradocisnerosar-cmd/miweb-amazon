@@ -1,77 +1,131 @@
-# Mini Web Amazon - Landing Page Afiliada
+# 🎄 Holiday Amazon Finds - Landing Page Afiliada
 
-Landing page afiliada a Amazon con tracking de clics y dashboard de analytics.
+Landing page afiliada a Amazon con tracking de clics en tiempo real usando Supabase.
 
-## 🚀 Despliegue en Vercel
+## 🚀 Características
 
-### Opción 1: Desde la CLI de Vercel (Recomendado)
+- ✅ Landing page premium tipo Apple
+- ✅ Tracking de clics en tiempo real (Supabase)
+- ✅ Dashboard admin privado con analytics
+- ✅ Diseño mobile-first responsive
+- ✅ Animaciones suaves tipo Apple
+- ✅ Despliegue en Vercel (sin configuración extra)
 
-1. **Instala Vercel CLI** (si no lo tienes):
-```bash
-npm install -g vercel
+## 📁 Estructura del Proyecto
+
+```
+/project
+├─ index.html          # Landing page principal
+├─ admin.html          # Dashboard admin privado
+├─ vercel.json         # Configuración Vercel
+├─ assets/
+│   ├─ images/         # Imágenes de productos
+│   └─ favicon.ico     # Favicon
+└─ SUPABASE_SETUP.md   # Guía completa de configuración
 ```
 
-2. **Inicia sesión en Vercel**:
-```bash
-vercel login
+## 🛠️ Tecnologías
+
+- **HTML5** - Estructura
+- **Tailwind CSS** (CDN) - Estilos
+- **JavaScript** - Funcionalidad
+- **Supabase** - Base de datos y autenticación
+- **Chart.js** (CDN) - Gráficos en dashboard
+- **Vercel** - Hosting
+
+## 📋 Configuración Rápida
+
+### 1. Configurar Supabase
+
+Sigue la guía completa en **[SUPABASE_SETUP.md](./SUPABASE_SETUP.md)**
+
+**Resumen rápido:**
+1. Crea proyecto en [supabase.com](https://supabase.com)
+2. Ejecuta los SQL scripts para crear tablas
+3. Crea usuario admin en Authentication
+4. Copia credenciales (URL y anon key)
+
+### 2. Actualizar Credenciales
+
+**En `index.html` (línea ~313):**
+```javascript
+const SUPABASE_URL = 'https://xxxxx.supabase.co';
+const SUPABASE_ANON_KEY = 'tu-anon-key';
 ```
 
-3. **Despliega el proyecto**:
-```bash
-vercel
+**En `admin.html` (línea ~242):**
+```javascript
+const SUPABASE_URL = 'https://xxxxx.supabase.co';
+const SUPABASE_ANON_KEY = 'tu-anon-key';
+const ALLOWED_EMAIL = 'admin@example.com'; // Tu email
 ```
 
-4. **Para producción**:
-```bash
-vercel --prod
-```
+### 3. Desplegar en Vercel
 
-### Opción 2: Desde GitHub
-
-1. **Sube tu código a GitHub** (si aún no lo has hecho):
+**Opción A: Desde GitHub (Recomendado)**
 ```bash
 git add .
 git commit -m "Ready for Vercel deployment"
 git push origin main
 ```
+Luego conecta el repo en [vercel.com](https://vercel.com)
 
-2. **Ve a [vercel.com](https://vercel.com)** y:
-   - Haz clic en "Add New Project"
-   - Conecta tu repositorio de GitHub
-   - Vercel detectará automáticamente la configuración
-   - Haz clic en "Deploy"
-
-### 📁 Archivos necesarios para Vercel
-
-- ✅ `vercel.json` - Configuración de Vercel
-- ✅ `requirements.txt` - Dependencias de Python
-- ✅ `api/index.py` - Handler para serverless function
-- ✅ `app.py` - Aplicación Flask principal
-
-## 🔧 Configuración
-
-### Variables de entorno (opcional)
-
-Si quieres cambiar la clave de admin sin modificar el código:
-
-1. En Vercel Dashboard → Settings → Environment Variables
-2. Agrega: `ADMIN_KEY` = `tu_clave_segura`
-
-Luego actualiza `app.py` para leerla:
-```python
-import os
-ADMIN_KEY = os.environ.get('ADMIN_KEY', '12')
+**Opción B: Desde CLI**
+```bash
+npm install -g vercel
+vercel login
+vercel --prod
 ```
 
-## 📝 Notas importantes
+## 📊 Estructura de Base de Datos
 
-- El archivo `clicks.json` se crea automáticamente en Vercel
-- Los datos persisten mientras la función esté activa
-- Para producción, considera usar una base de datos (Vercel Postgres)
+### Tabla `products`
+```sql
+- id (UUID)
+- title (TEXT)
+- description (TEXT)
+- category (TEXT)
+- image_url (TEXT)
+- affiliate_url (TEXT)
+- created_at (TIMESTAMP)
+```
 
-## 🎯 Rutas
+### Tabla `clicks`
+```sql
+- id (UUID)
+- product_id (UUID) → FK products(id)
+- user_agent (TEXT)
+- clicked_at (TIMESTAMP)
+```
 
-- `/` - Landing page principal
-- `/admin?key=TU_CLAVE` - Dashboard de analytics
-- `/click/<product_id>` - Tracking de clics
+## 🔐 Seguridad
+
+- **RLS (Row Level Security)** habilitado en todas las tablas
+- **Políticas** configuradas para:
+  - Lectura pública de productos
+  - Inserción pública de clicks (tracking)
+  - Lectura de clicks solo para usuarios autenticados
+
+## 📱 URLs
+
+- **Landing Page**: `https://tu-proyecto.vercel.app`
+- **Dashboard Admin**: `https://tu-proyecto.vercel.app/admin.html`
+
+## 📝 Notas
+
+- Las imágenes deben estar en `/assets/images/`
+- Vercel sirve automáticamente archivos estáticos desde la raíz
+- No se requiere build ni configuración extra
+- Todo funciona con archivos estáticos (HTML + JS)
+
+## 🆘 Soporte
+
+Para problemas o preguntas, consulta:
+- [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) - Guía completa
+- [Documentación Supabase](https://supabase.com/docs)
+- [Documentación Vercel](https://vercel.com/docs)
+
+---
+
+**Desarrollado con ❤️ para conversiones optimizadas**
 

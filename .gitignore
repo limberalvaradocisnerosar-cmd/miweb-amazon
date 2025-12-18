@@ -26,10 +26,6 @@ ENV/
 env/
 .venv
 
-# Flask
-instance/
-.webassets-cache
-
 # IDE
 .vscode/
 .idea/
@@ -44,10 +40,19 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+.env.*.local
 
 # Logs
 *.log
 
-# Tracking data
-clicks.json
+# Vercel
+.vercel
+
+# Node (si usas npm)
+node_modules/
+package-lock.json
+
+# Archivos temporales
+*.tmp
+*.temp
 
